@@ -5,6 +5,7 @@ import theme from './utils/theme';
 import i18n from './utils/i18n';
 import { I18nextProvider } from 'react-i18next';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import AuthProvider from './utils/context/auth.tsx';
 
 const queryClient = new QueryClient();
 
@@ -13,7 +14,9 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <I18nextProvider i18n={i18n} defaultNS={'translation'}>
         <ChakraProvider theme={theme}>
-          <RouterProvider router={router} />
+          <AuthProvider>
+            <RouterProvider router={router} />
+          </AuthProvider>
         </ChakraProvider>
       </I18nextProvider>
     </QueryClientProvider>

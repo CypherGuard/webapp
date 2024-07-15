@@ -4,23 +4,20 @@ import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
-import { loginRequest, LoginRequestProps } from '../api/auth/loginRequest.ts';
+import { registerRequest, RegisterRequestProps } from '../api/auth/registerRequest.ts';
 
 export function RegisterRoute() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const { t } = useTranslation(['translation', 'auth']);
-  
-  const mutation = useMutation(loginRequest, {
+
+  const mutation = useMutation(registerRequest, {
     onSuccess: () => {
-      queryClient.invalidateQueries('todos')
+      queryClient.invalidateQueries('todos');
     },
-  })
-  
-  const {
-    register,
-    handleSubmit,
-  } = useForm<LoginRequestProps>({
+  });
+
+  const { register, handleSubmit } = useForm<RegisterRequestProps>({
     defaultValues: {
       email: '',
       username: '',
@@ -28,9 +25,8 @@ export function RegisterRoute() {
       password_confirm: '',
     },
   });
-  
-  const onSubmit: SubmitHandler<LoginRequestProps> = (data) => mutation.mutate(data)
-  
+
+  const onSubmit: SubmitHandler<RegisterRequestProps> = (data) => mutation.mutate(data);
 
   return (
     <AuthLayout>
