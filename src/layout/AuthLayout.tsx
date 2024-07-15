@@ -1,25 +1,17 @@
-import {
-  Modal,
-  ModalContent,
-  ModalOverlay
-} from "@chakra-ui/react";
-import {ReactNode} from "react";
+import { Modal, ModalContent, ModalOverlay } from '@chakra-ui/react';
+import { ReactNode } from 'react';
 
 interface AuthLayoutProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 function AuthLayout(props: AuthLayoutProps) {
   return (
     <Modal isOpen={true} onClose={() => {}} isCentered>
       <ModalOverlay />
-      <ModalContent p={5}>
-        {
-          props.children
-        }
-      </ModalContent>
+      <ModalContent p={5}>{props.children}</ModalContent>
     </Modal>
-  )
+  );
 }
 
-export default AuthLayout
+export default AuthLayout;

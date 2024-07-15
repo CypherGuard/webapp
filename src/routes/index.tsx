@@ -1,14 +1,14 @@
-import {createBrowserRouter} from "react-router-dom";
-import {HomeRoute} from "./HomeRoute.tsx";
-import {LoginRoute} from "./LoginRoute.tsx";
+import { createBrowserRouter } from 'react-router-dom';
+import { HomeRoute } from './HomeRoute.tsx';
+import { LoginRoute } from './LoginRoute.tsx';
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <HomeRoute />,
   },
   {
-    path: "/login",
+    path: '/login',
     element: <LoginRoute />,
-  }
+  },
 ]);
