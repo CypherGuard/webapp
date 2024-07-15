@@ -1,9 +1,10 @@
 import { useContext, createContext, useState, ReactNode } from 'react';
 import { NavigateFunction } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react';
+import { useCookies } from 'react-cookie';
 
 interface AuthContextProps {
-  token: string;
+  token: any;
   user: any;
   logOut: (navigate: NavigateFunction) => void;
   logIn: (navigate: NavigateFunction, token1: string) => void;
@@ -20,18 +21,18 @@ const AuthContext = createContext<AuthContextProps>({
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(localStorage.getItem('site') || '');
   const toast = useToast()
+  const [cookie, setCookie, removeCookie] = useCookies();
 
   const logOut = (navigate: NavigateFunction) => {
     setUser(null);
-    setToken('');
+    removeCookie('token')
     localStorage.removeItem('site');
     navigate('/login');
   };
 
   const logIn = (navigate: NavigateFunction, token: string) => {
-    setToken(token);
+    setCookie('token', token);
     navigate('/');
     toast({
       title: "Logged in",
@@ -46,7 +47,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     navigate('/login');
   };
 
-  return <AuthContext.Provider value={{ token, user, logOut, redirect, logIn }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ token: cookie['token'], user, logOut, redirect, logIn }}>{children}</AuthContext.Provider>;
 };
 
 export default AuthProvider;
