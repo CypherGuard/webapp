@@ -1,5 +1,5 @@
 import AuthLayout from '../layout/AuthLayout.tsx';
-import { Button, FormControl, Input, Link, ModalBody, Text, VStack } from '@chakra-ui/react';
+import { Button, FormControl, HStack, Input, Link, ModalBody, Text, VStack } from '@chakra-ui/react';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useMutation } from 'react-query';
@@ -7,6 +7,7 @@ import { loginRequest, LoginRequestProps } from '../api/auth/loginRequest.ts';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAuth } from '../utils/context/auth.tsx';
 import { AxiosResponse } from 'axios';
+import Icon from '../assets/images/vault.svg';
 
 export function LoginRoute() {
   const navigate = useNavigate();
@@ -34,9 +35,10 @@ export function LoginRoute() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <VStack w={'100%'} spacing={7}>
             <VStack>
-              <Text fontSize={'3xl'} fontWeight={'bold'}>
-                {t('auth:login.title')}
-              </Text>
+              <HStack p={4}>
+                <img src={Icon} alt={'logo'} />
+                <Text fontWeight={'bold'} fontSize={'xl'}>CypherGuard</Text>
+              </HStack>
               <Text>{t('auth:login.description')}</Text>
             </VStack>
             <VStack w={'100%'} spacing={3}>

@@ -1,10 +1,11 @@
 import AuthLayout from '../layout/AuthLayout.tsx';
-import { Button, FormControl, Input, Link, ModalBody, Text, VStack } from '@chakra-ui/react';
+import { Button, FormControl, HStack, Input, Link, ModalBody, Text, VStack } from '@chakra-ui/react';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useMutation, useQueryClient } from 'react-query';
 import { registerRequest, RegisterRequestProps } from '../api/auth/registerRequest.ts';
+import Icon from '../assets/images/vault.svg';
 
 export function RegisterRoute() {
   const navigate = useNavigate();
@@ -34,9 +35,10 @@ export function RegisterRoute() {
         <form onSubmit={handleSubmit(onSubmit)}>
           <VStack w={'100%'} spacing={7}>
             <VStack>
-              <Text fontSize={'3xl'} fontWeight={'bold'}>
-                {t('auth:register.title')}
-              </Text>
+              <HStack p={4}>
+                <img src={Icon} alt={'logo'} />
+                <Text fontWeight={'bold'} fontSize={'xl'}>CypherGuard</Text>
+              </HStack>
               <Text>{t('auth:register.description')}</Text>
             </VStack>
             <VStack w={'100%'} spacing={3}>
