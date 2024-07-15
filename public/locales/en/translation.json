@@ -1,0 +1,26 @@
+{
+  "input": {
+    "password": {
+      "placeholder": "Enter your password",
+      "label": "Enter your password"
+    },
+    "password_confirm": {
+      "placeholder": "Confirm your password",
+      "label": "Confirm your password"
+    },
+    "username": {
+      "placeholder": "Enter your username",
+      "label": "Enter your username"
+    },
+    "email": {
+      "placeholder": "Enter your email",
+      "label": "Enter your email"
+    }
+  },
+  "button": {
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout",
+    "forgot_password": "Forgot password"
+  }
+}
