@@ -2,6 +2,7 @@ import { useContext, createContext, useState, ReactNode } from 'react';
 import { NavigateFunction } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react';
 import { useCookies } from 'react-cookie';
+import { useTranslation } from 'react-i18next';
 
 interface AuthContextProps {
   token: any;
@@ -23,6 +24,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState(null);
   const toast = useToast()
   const [cookie, setCookie, removeCookie] = useCookies();
+  const {t} = useTranslation(['auth'])
 
   const logOut = (navigate: NavigateFunction) => {
     setUser(null);
@@ -35,11 +37,12 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
     setCookie('token', token);
     navigate('/');
     toast({
-      title: "Logged in",
-      description: "You have successfully logged in",
+      title: t('auth:login.notif.success.title'),
+      description: t('auth:login.notif.success.message'),
       status: "success",
       duration: 9000,
       position: "top-right",
+      isClosable: true,
     })
   };
 
