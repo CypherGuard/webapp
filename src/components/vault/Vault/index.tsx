@@ -53,7 +53,7 @@ function Vault(props: VaultProps) {
             Partager
           </MenuItem>
           <MenuItem icon={<ExternalLinkIcon />}>
-            Deplacer
+            Deplacer les mot de passe
           </MenuItem>
           <MenuDivider />
           <MenuItem icon={<EmailIcon />} color={'red.300'}>

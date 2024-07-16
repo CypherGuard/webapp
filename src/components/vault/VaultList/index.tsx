@@ -1,5 +1,5 @@
 import Vault from '../Vault';
-import { Box, VStack } from '@chakra-ui/react';
+import { Box, Divider, VStack } from '@chakra-ui/react';
 import VaultAddButton from '../VaultAddButton';
 import { useQuery, useQueryClient } from 'react-query';
 import { getAllVaultRequest } from '../../../api/vault/getAllRequest.ts';
@@ -15,8 +15,9 @@ function VaultList() {
   };
   
   return (
-    <Box p={4}>
+    <Box w={'100%'} display={'flex'} flexDirection={'column'} gap={2}>
       <VaultAddButton onAdd={onAdd} />
+      <Divider orientation={'horizontal'} />
       <VStack>
         {
           vaults?.data?.data && vaults.data.data.map((item: any, index: Key) => (

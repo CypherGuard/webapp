@@ -45,9 +45,9 @@ function VaultAddButton (props: VaultAddButtonProps) {
   
   return (
     <>
-      <Button w={'100%'} mb={4} onClick={onOpen}>
+      <Button w={'100%'} onClick={onOpen} variant={'ghost'}>
         <HStack w={'100%'} justifyContent={'space-between'}>
-          <p>Add Vault</p>
+          <p>Coffre fort</p>
           <AddIcon />
         </HStack>
       </Button>
