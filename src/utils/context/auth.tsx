@@ -55,6 +55,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       position: 'top-right',
       isClosable: true,
     });
+    
   };
   
   const redirect = (navigate: NavigateFunction) => {
