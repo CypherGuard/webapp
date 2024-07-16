@@ -26,8 +26,8 @@ function VaultList() {
       <VaultAddButton onAdd={onAdd} />
       <VStack>
         {
-          data && data.map((item) => (
-            <Vault vault={item} />
+          data && data.map((item, index) => (
+            <Vault vault={item} key={index} />
           ))
         }
       </VStack>

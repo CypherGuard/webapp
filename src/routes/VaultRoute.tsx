@@ -1,12 +1,15 @@
 import NavbarLayout from '../layout/NavbarLayout.tsx';
+import HeaderLayout from '../layout/HeaderLayout.tsx';
 
 function VaultRoute() {
   
   return (
     <NavbarLayout>
-      <div>
-        <h1>Vault</h1>
-      </div>
+      <HeaderLayout>
+        <div>
+          <h1>Vault</h1>
+        </div>
+      </HeaderLayout>
     </NavbarLayout>
   )
 }

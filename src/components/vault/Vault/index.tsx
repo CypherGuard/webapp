@@ -7,10 +7,19 @@ import {
   MenuButton,
   MenuDivider,
   MenuItem,
-  MenuList,
+  MenuList, useDisclosure,
 } from '@chakra-ui/react';
-import { AddIcon, EditIcon, ExternalLinkIcon, SettingsIcon, TriangleDownIcon, WarningTwoIcon } from '@chakra-ui/icons';
+import {
+  AddIcon,
+  EditIcon,
+  EmailIcon,
+  ExternalLinkIcon,
+  SettingsIcon,
+  TriangleDownIcon,
+  WarningTwoIcon,
+} from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
+import VaultEdit from '../../modals/VaultEdit';
 
 interface VaultProps {
   vault: any;
@@ -18,6 +27,7 @@ interface VaultProps {
 
 function Vault(props: VaultProps) {
   const navigate = useNavigate();
+  const edit = useDisclosure()
   
   return (
     <ButtonGroup isAttached variant='outline' w={'100%'}>
@@ -30,8 +40,14 @@ function Vault(props: VaultProps) {
       <Menu>
         <MenuButton as={IconButton} aria-label='Add to friends' variant={'ghost'} icon={<SettingsIcon />} />
         <MenuList>
-          <MenuItem icon={<EditIcon />}>
-            Modifier
+          <MenuItem icon={<EditIcon />} onClick={edit.onOpen}>
+            Editer
+            <VaultEdit
+              vault={props.vault}
+              isOpen={edit.isOpen}
+              onOpen={edit.onOpen}
+              onClose={edit.onClose}
+            />
           </MenuItem>
           <MenuItem icon={<AddIcon />}>
             Partager
@@ -40,7 +56,10 @@ function Vault(props: VaultProps) {
             Deplacer
           </MenuItem>
           <MenuDivider />
-          <MenuItem icon={<WarningTwoIcon />}>
+          <MenuItem icon={<EmailIcon />} color={'red.300'}>
+            Trasnferer la propriété
+          </MenuItem>
+          <MenuItem icon={<WarningTwoIcon />} color={'red.300'}>
             Supprimer
           </MenuItem>
         </MenuList>
