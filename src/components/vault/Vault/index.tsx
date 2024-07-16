@@ -23,6 +23,7 @@ import VaultEdit from '../../modals/VaultEdit';
 import VaultDelete from '../../modals/VaultDelete';
 import { useAuth } from '../../../utils/context/auth.tsx';
 import VaultShare from '../../modals/VaultShare';
+import VaultTransfer from '../../modals/VaultTransfer';
 
 interface VaultProps {
   vault: any;
@@ -33,6 +34,7 @@ function Vault(props: VaultProps) {
   const edit = useDisclosure()
   const deletion = useDisclosure()
   const share = useDisclosure()
+  const transfer = useDisclosure()
   const {user} = useAuth()
   
   return (
@@ -70,8 +72,14 @@ function Vault(props: VaultProps) {
                 Deplacer les mot de passe
               </MenuItem>
               <MenuDivider />
-              <MenuItem icon={<EmailIcon />} color={'red.300'}>
+              <MenuItem icon={<EmailIcon />} color={'red.300'} onClick={transfer.onOpen}>
                 Trasnferer la propriété
+                <VaultTransfer
+                  vault={props.vault}
+                  isOpen={transfer.isOpen}
+                  onOpen={transfer.onOpen}
+                  onClose={transfer.onClose}
+                />
               </MenuItem>
               <MenuItem icon={<WarningTwoIcon />} color={'red.300'} onClick={deletion.onOpen}>
                 Supprimer
