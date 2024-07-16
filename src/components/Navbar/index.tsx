@@ -1,5 +1,5 @@
 import { Box, HStack, Text, VStack } from '@chakra-ui/react';
-import VaultList from '../VaultList';
+import VaultList from '../vault/VaultList';
 import Icon from '../../assets/images/vault.svg';
 
 function Navbar() {

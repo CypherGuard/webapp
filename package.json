@@ -30,7 +30,8 @@
     "react-i18next": "^14.1.2",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.24.1",
-    "translation-check": "^1.1.0"
+    "translation-check": "^1.1.0",
+    "universal-cookie": "^7.1.4"
   },
   "devDependencies": {
     "@eslint/compat": "^1.1.1",
