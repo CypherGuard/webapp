@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 import VaultEdit from '../../modals/VaultEdit';
 import VaultDelete from '../../modals/VaultDelete';
 import { useAuth } from '../../../utils/context/auth.tsx';
+import VaultShare from '../../modals/VaultShare';
 
 interface VaultProps {
   vault: any;
@@ -31,6 +32,7 @@ function Vault(props: VaultProps) {
   const navigate = useNavigate();
   const edit = useDisclosure()
   const deletion = useDisclosure()
+  const share = useDisclosure()
   const {user} = useAuth()
   
   return (
@@ -55,8 +57,14 @@ function Vault(props: VaultProps) {
                   onClose={edit.onClose}
                 />
               </MenuItem>
-              <MenuItem icon={<AddIcon />}>
+              <MenuItem icon={<AddIcon />} onClick={share.onOpen}>
                 Partager
+                <VaultShare
+                  vault={props.vault}
+                  isOpen={share.isOpen}
+                  onOpen={share.onOpen}
+                  onClose={share.onClose}
+                />
               </MenuItem>
               <MenuItem icon={<ExternalLinkIcon />}>
                 Deplacer les mot de passe
