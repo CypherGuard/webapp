@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from 'react-query';
 import { GetCurrentUser } from '../../api/auth/getCurrentUser.ts';
+import { privateUserPgpKey, publicUserPgpKey } from '../../stores/userPgpKey.ts';
 
 interface AuthContextProps {
   token: any;
@@ -39,6 +40,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { t } = useTranslation(['auth']);
   
   const logOut = (navigate: NavigateFunction) => {
+    publicUserPgpKey.set(undefined)
+    privateUserPgpKey.set(undefined)
     removeCookie('token');
     localStorage.removeItem('site');
     navigate('/login');
