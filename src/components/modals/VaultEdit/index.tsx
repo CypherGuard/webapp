@@ -73,7 +73,7 @@ function VaultEdit (props: VaultEditProps) {
             <Button colorScheme="red" variant={'outline'} mr={3} onClick={props.onClose}>
               Close
             </Button>
-            <Button colorScheme={'red'} type={'submit'}>Modify</Button>
+            <Button colorScheme={'red'} type={'submit'} variant={'solid'}>Modify</Button>
           </ModalFooter>
         </form>
       </ModalContent>

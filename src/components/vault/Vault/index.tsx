@@ -20,6 +20,7 @@ import {
 } from '@chakra-ui/icons';
 import { useNavigate } from 'react-router-dom';
 import VaultEdit from '../../modals/VaultEdit';
+import VaultDelete from '../../modals/VaultDelete';
 
 interface VaultProps {
   vault: any;
@@ -28,6 +29,7 @@ interface VaultProps {
 function Vault(props: VaultProps) {
   const navigate = useNavigate();
   const edit = useDisclosure()
+  const deletion = useDisclosure()
   
   return (
     <ButtonGroup isAttached variant='outline' w={'100%'}>
@@ -59,8 +61,14 @@ function Vault(props: VaultProps) {
           <MenuItem icon={<EmailIcon />} color={'red.300'}>
             Trasnferer la propriété
           </MenuItem>
-          <MenuItem icon={<WarningTwoIcon />} color={'red.300'}>
+          <MenuItem icon={<WarningTwoIcon />} color={'red.300'} onClick={deletion.onOpen}>
             Supprimer
+            <VaultDelete
+              vault={props.vault}
+              isOpen={deletion.isOpen}
+              onOpen={deletion.onOpen}
+              onClose={deletion.onClose}
+            />
           </MenuItem>
         </MenuList>
       </Menu>
