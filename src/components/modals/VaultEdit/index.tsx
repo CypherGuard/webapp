@@ -11,6 +11,7 @@ import {
 import { useMutation, useQueryClient } from 'react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { editVaultRequest, editVaultRequestProps } from '../../../api/vault/editRequest.ts';
+import { useEffect } from 'react';
 
 interface VaultEditProps {
   onClose: () => void;
@@ -37,12 +38,20 @@ function VaultEdit (props: VaultEditProps) {
     },
   });
   
-  const { register, handleSubmit } = useForm<editVaultRequestProps>({
+  const { register, handleSubmit, reset } = useForm<editVaultRequestProps>({
     defaultValues: {
       name: props.vault.name,
       id: props.vault.id
     },
   });
+  
+  useEffect(() => {
+    reset({
+      name: props.vault.name,
+      id: props.vault.id
+    })
+  }, [props.vault])
+  
   
   const onSubmit: SubmitHandler<editVaultRequestProps> = (data) => mutation.mutate(data);
   
@@ -56,7 +65,7 @@ function VaultEdit (props: VaultEditProps) {
           <ModalBody>
             <FormControl>
               <FormLabel>Vault Name</FormLabel>
-              <Input defaultValue={props.vault.name} {...register('name', { required: true })} placeholder="Vault Name" variant={'filled'} />
+              <Input {...register('name', { required: true })} placeholder="Vault Name" variant={'filled'} />
             </FormControl>
           </ModalBody>
           

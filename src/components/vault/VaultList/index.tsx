@@ -3,30 +3,23 @@ import { Box, VStack } from '@chakra-ui/react';
 import VaultAddButton from '../VaultAddButton';
 import { useQuery, useQueryClient } from 'react-query';
 import { getAllVaultRequest } from '../../../api/vault/getAllRequest.ts';
-import { useEffect, useState } from 'react';
+import { Key } from 'react';
 
 
 function VaultList() {
-  const vaults = useQuery('vault_list_request', getAllVaultRequest)
-  const [data, setData] = useState<any[]>()
-  const queryClient = useQueryClient()
-  
-  useEffect(() => {
-    if (!vaults?.data?.data) return
-    
-    setData(vaults.data.data)
-  }, [vaults]);
+  const vaults = useQuery('vault_list_request', getAllVaultRequest);
+  const queryClient = useQueryClient();
   
   const onAdd = () => {
-    queryClient.invalidateQueries('vault_list_request')
-  }
+    queryClient.invalidateQueries('vault_list_request');
+  };
   
   return (
     <Box p={4}>
       <VaultAddButton onAdd={onAdd} />
       <VStack>
         {
-          data && data.map((item, index) => (
+          vaults?.data?.data && vaults.data.data.map((item: any, index: Key) => (
             <Vault vault={item} key={index} />
           ))
         }
