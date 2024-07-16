@@ -21,6 +21,7 @@ import {
 import { useNavigate } from 'react-router-dom';
 import VaultEdit from '../../modals/VaultEdit';
 import VaultDelete from '../../modals/VaultDelete';
+import { useAuth } from '../../../utils/context/auth.tsx';
 
 interface VaultProps {
   vault: any;
@@ -30,6 +31,7 @@ function Vault(props: VaultProps) {
   const navigate = useNavigate();
   const edit = useDisclosure()
   const deletion = useDisclosure()
+  const {user} = useAuth()
   
   return (
     <ButtonGroup isAttached variant='outline' w={'100%'}>
@@ -40,41 +42,42 @@ function Vault(props: VaultProps) {
         </HStack>
       </Button>
       {
-      
+        user.id === props.vault.owner_id && (
+          <Menu>
+            <MenuButton as={IconButton} aria-label='Add to friends' variant={'ghost'} icon={<SettingsIcon />} />
+            <MenuList>
+              <MenuItem icon={<EditIcon />} onClick={edit.onOpen}>
+                Editer
+                <VaultEdit
+                  vault={props.vault}
+                  isOpen={edit.isOpen}
+                  onOpen={edit.onOpen}
+                  onClose={edit.onClose}
+                />
+              </MenuItem>
+              <MenuItem icon={<AddIcon />}>
+                Partager
+              </MenuItem>
+              <MenuItem icon={<ExternalLinkIcon />}>
+                Deplacer les mot de passe
+              </MenuItem>
+              <MenuDivider />
+              <MenuItem icon={<EmailIcon />} color={'red.300'}>
+                Trasnferer la propriété
+              </MenuItem>
+              <MenuItem icon={<WarningTwoIcon />} color={'red.300'} onClick={deletion.onOpen}>
+                Supprimer
+                <VaultDelete
+                  vault={props.vault}
+                  isOpen={deletion.isOpen}
+                  onOpen={deletion.onOpen}
+                  onClose={deletion.onClose}
+                />
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        )
       }
-      <Menu>
-        <MenuButton as={IconButton} aria-label='Add to friends' variant={'ghost'} icon={<SettingsIcon />} />
-        <MenuList>
-          <MenuItem icon={<EditIcon />} onClick={edit.onOpen}>
-            Editer
-            <VaultEdit
-              vault={props.vault}
-              isOpen={edit.isOpen}
-              onOpen={edit.onOpen}
-              onClose={edit.onClose}
-            />
-          </MenuItem>
-          <MenuItem icon={<AddIcon />}>
-            Partager
-          </MenuItem>
-          <MenuItem icon={<ExternalLinkIcon />}>
-            Deplacer les mot de passe
-          </MenuItem>
-          <MenuDivider />
-          <MenuItem icon={<EmailIcon />} color={'red.300'}>
-            Trasnferer la propriété
-          </MenuItem>
-          <MenuItem icon={<WarningTwoIcon />} color={'red.300'} onClick={deletion.onOpen}>
-            Supprimer
-            <VaultDelete
-              vault={props.vault}
-              isOpen={deletion.isOpen}
-              onOpen={deletion.onOpen}
-              onClose={deletion.onClose}
-            />
-          </MenuItem>
-        </MenuList>
-      </Menu>
     </ButtonGroup>
   )
 }

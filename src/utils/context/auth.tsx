@@ -23,7 +23,12 @@ const AuthContext = createContext<AuthContextProps>({
 });
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const user = useQuery('me', GetCurrentUser);
+  const user = useQuery('me', GetCurrentUser)?.data?.data ?? {
+    id: '',
+    email: '',
+    fullname: '',
+  };
+  
   const toast = useToast()
   const [cookie, setCookie, removeCookie] = useCookies();
   const {t} = useTranslation(['auth'])
