@@ -1,6 +1,5 @@
 import {
-  Avatar,
-  Button, ButtonGroup,
+  Button,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -8,7 +7,7 @@ import {
   DrawerHeader,
   DrawerOverlay,
   FormControl,
-  HStack, IconButton,
+  HStack,
   Input,
   Text,
   useToast, VStack,
@@ -16,9 +15,9 @@ import {
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useEffect } from 'react';
-import { SmallCloseIcon } from '@chakra-ui/icons';
 import { addUserVaultRequest, addUserVaultRequestProps } from '../../../api/vault/addUserRequest.ts';
 import { getUserVaultRequest } from '../../../api/vault/getUserRequest.ts';
+import VaultUserShare from './VaultUserShare.tsx';
 
 interface VaultShareProps {
   onClose: () => void;
@@ -38,7 +37,7 @@ function VaultShare (props: VaultShareProps) {
     }
   );
   
-  const mutation = useMutation(addUserVaultRequest, {
+  const addUserMutation = useMutation(addUserVaultRequest, {
     onSuccess: () => {
       toast({
         title: 'Utilisateur ajouter',
@@ -51,7 +50,7 @@ function VaultShare (props: VaultShareProps) {
     },
   });
   
-  const { register, handleSubmit, reset } = useForm<addUserVaultRequestProps>({
+  const addUserForm = useForm<addUserVaultRequestProps>({
     defaultValues: {
       username: '',
       id: props.vault.id
@@ -59,7 +58,7 @@ function VaultShare (props: VaultShareProps) {
   });
   
   useEffect(() => {
-    reset({
+    addUserForm.reset({
       username: '',
       id: props.vault.id
     })
@@ -67,7 +66,7 @@ function VaultShare (props: VaultShareProps) {
   }, [props.vault])
   
   
-  const onSubmit: SubmitHandler<addUserVaultRequestProps> = (data) => mutation.mutate(data);
+  const onSubmit: SubmitHandler<addUserVaultRequestProps> = (data) => addUserMutation.mutate(data);
   
   return (
     
@@ -80,13 +79,13 @@ function VaultShare (props: VaultShareProps) {
         <DrawerCloseButton />
         <DrawerBody>
           <VStack w={'100%'} spacing={5} my={5}>
-            <form style={{ width: '100%' }} onSubmit={handleSubmit(onSubmit)}>
+            <form style={{ width: '100%' }} onSubmit={addUserForm.handleSubmit(onSubmit)}>
               <VStack alignItems={'start'}>
                 <Text fontWeight={'bold'} fontSize={'lg'}>Partagez avec :</Text>
                 <FormControl>
                   <HStack>
                     <Input
-                      {...register('username', { required: true })}
+                      {...addUserForm.register('username', { required: true })}
                       placeholder={'Entrer un email'}
                       variant={'filled'}
                     />
@@ -96,29 +95,16 @@ function VaultShare (props: VaultShareProps) {
               </VStack>
             </form>
             
-            <form style={{ width: '100%' }}>
-              <VStack alignItems={'start'} w={'100%'}>
-                <Text fontWeight={'bold'} fontSize={'lg'}>Membres :</Text>
-                <VStack w={'100%'}>
-                  {
-                    users?.data?.data && users.data.data.map((item: any, index: any) => (
-                      <ButtonGroup isAttached w={'100%'} key={index}>
-                        <Button w={'100%'}>
-                          <HStack w={'100%'}>
-                            <Avatar
-                              size={'xs'}
-                              name={item.fullname}
-                            />
-                            <p>{item.fullname}</p>
-                          </HStack>
-                        </Button>
-                        <IconButton colorScheme={'red'} aria-label={'delete'} icon={<SmallCloseIcon />} />
-                      </ButtonGroup>
-                    ))
-                  }
-                </VStack>
+            <VStack alignItems={'start'} w={'100%'}>
+              <Text fontWeight={'bold'} fontSize={'lg'}>Membres :</Text>
+              <VStack w={'100%'}>
+                {
+                  users?.data?.data && users.data.data.map((item: any, index: any) => (
+                    <VaultUserShare vault={props.vault} user={item} key={index} />
+                  ))
+                }
               </VStack>
-            </form>
+            </VStack>
           </VStack>
         
         </DrawerBody>

@@ -1,20 +1,27 @@
 import AuthLayout from '../layout/AuthLayout.tsx';
-import { Button, FormControl, HStack, Input, Link, ModalBody, Text, VStack } from '@chakra-ui/react';
+import { Button, FormControl, HStack, Input, Link, ModalBody, Text, useToast, VStack } from '@chakra-ui/react';
 import { Link as ReactRouterLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 import { registerRequest, RegisterRequestProps } from '../api/auth/registerRequest.ts';
 import Icon from '../assets/images/vault.svg';
 
 export function RegisterRoute() {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const { t } = useTranslation(['translation', 'auth']);
+  const toast = useToast();
 
   const mutation = useMutation(registerRequest, {
     onSuccess: () => {
-      queryClient.invalidateQueries('todos');
+      navigate('/login');
+      toast({
+        title: t('auth:register.success'),
+        status: 'success',
+        duration: 9000,
+        isClosable: true,
+        position: 'top-right',
+      });
     },
   });
 

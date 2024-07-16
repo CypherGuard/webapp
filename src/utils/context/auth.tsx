@@ -23,40 +23,49 @@ const AuthContext = createContext<AuthContextProps>({
 });
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const user = useQuery('me', GetCurrentUser)?.data?.data ?? {
+  const [cookie, setCookie, removeCookie] = useCookies(['token']);
+  const token = cookie['token'];
+  
+  const { data: userData } = useQuery('me', GetCurrentUser, {
+    enabled: !!token, // La requête ne sera exécutée que si le token est présent
+  });
+  const user = userData?.data ?? {
     id: '',
     email: '',
     fullname: '',
   };
   
-  const toast = useToast()
-  const [cookie, setCookie, removeCookie] = useCookies();
-  const {t} = useTranslation(['auth'])
-
+  const toast = useToast();
+  const { t } = useTranslation(['auth']);
+  
   const logOut = (navigate: NavigateFunction) => {
-    removeCookie('token')
+    removeCookie('token');
     localStorage.removeItem('site');
     navigate('/login');
   };
-
+  
   const logIn = (navigate: NavigateFunction, token: string) => {
     setCookie('token', token);
     navigate('/');
     toast({
       title: t('auth:login.notif.success.title'),
       description: t('auth:login.notif.success.message'),
-      status: "success",
+      status: 'success',
       duration: 9000,
-      position: "top-right",
+      position: 'top-right',
       isClosable: true,
-    })
+    });
   };
-
+  
   const redirect = (navigate: NavigateFunction) => {
     navigate('/login');
   };
-
-  return <AuthContext.Provider value={{ token: cookie['token'], user, logOut, redirect, logIn }}>{children}</AuthContext.Provider>;
+  
+  return (
+    <AuthContext.Provider value={{ token, user, logOut, redirect, logIn }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export default AuthProvider;
