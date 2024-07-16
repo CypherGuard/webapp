@@ -13,7 +13,11 @@ import { useMutation } from 'react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { createVaultRequest, createVaultRequestProps } from '../../../api/vault/createRequest.ts';
 
-function VaultAddButton () {
+interface VaultAddButtonProps {
+  onAdd: () => void;
+}
+
+function VaultAddButton (props: VaultAddButtonProps) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const toast = useToast();
   
@@ -27,6 +31,7 @@ function VaultAddButton () {
         position: 'top-right',
       });
       onClose();
+      props.onAdd();
     },
   });
   
