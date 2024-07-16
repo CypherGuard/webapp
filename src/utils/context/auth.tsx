@@ -1,8 +1,10 @@
-import { useContext, createContext, useState, ReactNode } from 'react';
+import { useContext, createContext, ReactNode } from 'react';
 import { NavigateFunction } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react';
 import { useCookies } from 'react-cookie';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from 'react-query';
+import { GetCurrentUser } from '../../api/auth/getCurrentUser.ts';
 
 interface AuthContextProps {
   token: any;
@@ -21,13 +23,12 @@ const AuthContext = createContext<AuthContextProps>({
 });
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState(null);
+  const user = useQuery('me', GetCurrentUser);
   const toast = useToast()
   const [cookie, setCookie, removeCookie] = useCookies();
   const {t} = useTranslation(['auth'])
 
   const logOut = (navigate: NavigateFunction) => {
-    setUser(null);
     removeCookie('token')
     localStorage.removeItem('site');
     navigate('/login');

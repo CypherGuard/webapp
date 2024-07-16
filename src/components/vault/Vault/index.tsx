@@ -39,6 +39,9 @@ function Vault(props: VaultProps) {
           <p>{props.vault.name}</p>
         </HStack>
       </Button>
+      {
+      
+      }
       <Menu>
         <MenuButton as={IconButton} aria-label='Add to friends' variant={'ghost'} icon={<SettingsIcon />} />
         <MenuList>
