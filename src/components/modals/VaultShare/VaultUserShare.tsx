@@ -42,7 +42,7 @@ function VaultUserShare(props: VaultUserShareProps) {
       id: props.vault.id
     })
     queryClient.invalidateQueries('users_shared_drawer')
-  }, [props.vault])
+  }, [props.vault, props.user])
   
   return (
     <form style={{ width: '100%' }} onSubmit={removeUserForm.handleSubmit(onRemoveSubmit)}>

@@ -47,6 +47,10 @@ function VaultShare (props: VaultShareProps) {
         position: 'top-right',
       });
       queryClient.invalidateQueries('users_shared_drawer')
+      addUserForm.reset({
+        username: '',
+        id: props.vault.id
+      })
     },
   });
   
