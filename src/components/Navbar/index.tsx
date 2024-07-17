@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 function Navbar() {
   const navigate = useNavigate();
-  
+
   return (
     <DarkMode>
       <Box w={'250px'} h={'100%'} bgColor={'gray.900'}>
@@ -14,7 +14,9 @@ function Navbar() {
           <VStack h={'100%'} w={'100%'} spacing={4}>
             <HStack p={4}>
               <img src={Icon} alt={'logo'} />
-              <Text fontWeight={'bold'} fontSize={'xl'} color={'white'}>CypherGuard</Text>
+              <Text fontWeight={'bold'} fontSize={'xl'} color={'white'}>
+                CypherGuard
+              </Text>
             </HStack>
             <Button w={'100%'} onClick={() => navigate('/')}>
               <HStack w={'100%'} justifyContent={'space-between'}>
@@ -28,7 +30,7 @@ function Navbar() {
         </VStack>
       </Box>
     </DarkMode>
-  )
+  );
 }
 
 export default Navbar;

@@ -10,7 +10,7 @@ function HeaderLayout(props: HeaderLayoutProps) {
   return (
     <VStack w={'100%'} h={'100vh'} alignItems={'start'} spacing={0}>
       <Header />
-      <Divider orientation='horizontal' />
+      <Divider orientation="horizontal" />
       <Box w={'100%'} height={'100%'}>
         {props.children}
       </Box>

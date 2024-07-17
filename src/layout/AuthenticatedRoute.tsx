@@ -10,7 +10,7 @@ interface AuthenticatedRouteProps {
 export function AuthenticatedRoute(props: AuthenticatedRouteProps) {
   const auth = useAuth();
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     if (!auth.token) {
       auth.redirect(navigate);

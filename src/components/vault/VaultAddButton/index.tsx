@@ -1,12 +1,18 @@
 import {
-  Button, FormControl, FormLabel,
-  HStack, Input,
+  Button,
+  FormControl,
+  FormLabel,
+  HStack,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
-  ModalContent, ModalFooter,
+  ModalContent,
+  ModalFooter,
   ModalHeader,
-  ModalOverlay, useDisclosure, useToast,
+  ModalOverlay,
+  useDisclosure,
+  useToast,
 } from '@chakra-ui/react';
 import { AddIcon } from '@chakra-ui/icons';
 import { useMutation } from 'react-query';
@@ -17,10 +23,10 @@ interface VaultAddButtonProps {
   onAdd: () => void;
 }
 
-function VaultAddButton (props: VaultAddButtonProps) {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+function VaultAddButton(props: VaultAddButtonProps) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
-  
+
   const mutation = useMutation(createVaultRequest, {
     onSuccess: () => {
       toast({
@@ -34,15 +40,15 @@ function VaultAddButton (props: VaultAddButtonProps) {
       props.onAdd();
     },
   });
-  
+
   const { register, handleSubmit } = useForm<createVaultRequestProps>({
     defaultValues: {
       name: '',
     },
   });
-  
+
   const onSubmit: SubmitHandler<createVaultRequestProps> = (data) => mutation.mutate(data);
-  
+
   return (
     <>
       <Button w={'100%'} onClick={onOpen} variant={'ghost'}>
@@ -51,9 +57,9 @@ function VaultAddButton (props: VaultAddButtonProps) {
           <AddIcon />
         </HStack>
       </Button>
-        <Modal isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay />
-          <ModalContent>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
           <ModalHeader>Create Vault</ModalHeader>
           <ModalCloseButton />
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -63,18 +69,20 @@ function VaultAddButton (props: VaultAddButtonProps) {
                 <Input {...register('name', { required: true })} placeholder="Vault Name" variant={'filled'} />
               </FormControl>
             </ModalBody>
-            
+
             <ModalFooter>
               <Button colorScheme="red" variant={'outline'} mr={3} onClick={onClose}>
                 Close
               </Button>
-              <Button colorScheme={'red'} type={'submit'}>Create</Button>
+              <Button colorScheme={'red'} type={'submit'}>
+                Create
+              </Button>
             </ModalFooter>
           </form>
         </ModalContent>
       </Modal>
     </>
-  )
+  );
 }
 
 export default VaultAddButton;

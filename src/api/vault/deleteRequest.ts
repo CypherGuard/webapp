@@ -1,7 +1,7 @@
 import { AuthAxios } from '../instances/authAxios.ts';
 
 export interface deleteVaultRequestProps {
-  id: number
+  id: number;
 }
 
 export function deleteVaultRequest(props: deleteVaultRequestProps) {

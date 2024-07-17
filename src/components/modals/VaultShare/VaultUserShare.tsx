@@ -13,7 +13,7 @@ interface VaultUserShareProps {
 function VaultUserShare(props: VaultUserShareProps) {
   const toast = useToast();
   const queryClient = useQueryClient();
-  
+
   const removeUserMutation = useMutation(removeUserVaultRequest, {
     onSuccess: () => {
       toast({
@@ -23,43 +23,40 @@ function VaultUserShare(props: VaultUserShareProps) {
         isClosable: true,
         position: 'top-right',
       });
-      queryClient.invalidateQueries('users_shared_drawer')
+      queryClient.invalidateQueries('users_shared_drawer');
     },
   });
-  
+
   const removeUserForm = useForm<removeUserVaultRequestProps>({
     defaultValues: {
       username: props.user.username,
-      id: props.vault.id
+      id: props.vault.id,
     },
   });
-  
+
   const onRemoveSubmit: SubmitHandler<removeUserVaultRequestProps> = (data) => removeUserMutation.mutate(data);
-  
+
   useEffect(() => {
     removeUserForm.reset({
       username: props.user.username,
-      id: props.vault.id
-    })
-    queryClient.invalidateQueries('users_shared_drawer')
-  }, [props.vault, props.user])
-  
+      id: props.vault.id,
+    });
+    queryClient.invalidateQueries('users_shared_drawer');
+  }, [props.vault, props.user]);
+
   return (
     <form style={{ width: '100%' }} onSubmit={removeUserForm.handleSubmit(onRemoveSubmit)}>
       <ButtonGroup isAttached w={'100%'}>
         <Button w={'100%'}>
           <HStack w={'100%'}>
-            <Avatar
-              size={'xs'}
-              name={props.user.fullname}
-            />
+            <Avatar size={'xs'} name={props.user.fullname} />
             <p>{props.user.fullname}</p>
           </HStack>
         </Button>
         <IconButton colorScheme={'red'} aria-label={'delete'} icon={<SmallCloseIcon />} type={'submit'} />
       </ButtonGroup>
     </form>
-  )
+  );
 }
 
 export default VaultUserShare;

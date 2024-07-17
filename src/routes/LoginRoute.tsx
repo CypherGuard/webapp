@@ -37,7 +37,9 @@ export function LoginRoute() {
             <VStack>
               <HStack p={4}>
                 <img src={Icon} alt={'logo'} />
-                <Text fontWeight={'bold'} fontSize={'xl'}>CypherGuard</Text>
+                <Text fontWeight={'bold'} fontSize={'xl'}>
+                  CypherGuard
+                </Text>
               </HStack>
               <Text>{t('auth:login.description')}</Text>
             </VStack>

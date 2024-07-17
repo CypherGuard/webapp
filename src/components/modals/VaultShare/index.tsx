@@ -10,7 +10,8 @@ import {
   HStack,
   Input,
   Text,
-  useToast, VStack,
+  useToast,
+  VStack,
 } from '@chakra-ui/react';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -26,17 +27,13 @@ interface VaultShareProps {
   vault: any;
 }
 
-function VaultShare (props: VaultShareProps) {
+function VaultShare(props: VaultShareProps) {
   const toast = useToast();
   const queryClient = useQueryClient();
-  const users = useQuery(
-    ['users_shared_drawer', props.vault.id],
-    () => getUserVaultRequest(props.vault.id),
-    {
-      enabled: !!props.vault.id,
-    }
-  );
-  
+  const users = useQuery(['users_shared_drawer', props.vault.id], () => getUserVaultRequest(props.vault.id), {
+    enabled: !!props.vault.id,
+  });
+
   const addUserMutation = useMutation(addUserVaultRequest, {
     onSuccess: () => {
       toast({
@@ -46,46 +43,44 @@ function VaultShare (props: VaultShareProps) {
         isClosable: true,
         position: 'top-right',
       });
-      queryClient.invalidateQueries('users_shared_drawer')
+      queryClient.invalidateQueries('users_shared_drawer');
       addUserForm.reset({
         username: '',
-        id: props.vault.id
-      })
+        id: props.vault.id,
+      });
     },
   });
-  
+
   const addUserForm = useForm<addUserVaultRequestProps>({
     defaultValues: {
       username: '',
-      id: props.vault.id
+      id: props.vault.id,
     },
   });
-  
+
   useEffect(() => {
     addUserForm.reset({
       username: '',
-      id: props.vault.id
-    })
-    queryClient.invalidateQueries('users_shared_drawer')
-  }, [props.vault])
-  
-  
+      id: props.vault.id,
+    });
+    queryClient.invalidateQueries('users_shared_drawer');
+  }, [props.vault]);
+
   const onSubmit: SubmitHandler<addUserVaultRequestProps> = (data) => addUserMutation.mutate(data);
-  
+
   return (
-    
     <Drawer placement={'right'} onClose={props.onClose} isOpen={props.isOpen} size={'md'}>
       <DrawerOverlay />
       <DrawerContent>
-        <DrawerHeader borderBottomWidth='1px'>
-          {props.vault.name}
-        </DrawerHeader>
+        <DrawerHeader borderBottomWidth="1px">{props.vault.name}</DrawerHeader>
         <DrawerCloseButton />
         <DrawerBody>
           <VStack w={'100%'} spacing={5} my={5}>
             <form style={{ width: '100%' }} onSubmit={addUserForm.handleSubmit(onSubmit)}>
               <VStack alignItems={'start'}>
-                <Text fontWeight={'bold'} fontSize={'lg'}>Partagez avec :</Text>
+                <Text fontWeight={'bold'} fontSize={'lg'}>
+                  Partagez avec :
+                </Text>
                 <FormControl>
                   <HStack>
                     <Input
@@ -93,28 +88,30 @@ function VaultShare (props: VaultShareProps) {
                       placeholder={'Entrer un email'}
                       variant={'filled'}
                     />
-                    <Button type={'submit'} colorScheme={'red'}>Ajouter</Button>
+                    <Button type={'submit'} colorScheme={'red'}>
+                      Ajouter
+                    </Button>
                   </HStack>
                 </FormControl>
               </VStack>
             </form>
-            
+
             <VStack alignItems={'start'} w={'100%'}>
-              <Text fontWeight={'bold'} fontSize={'lg'}>Membres :</Text>
+              <Text fontWeight={'bold'} fontSize={'lg'}>
+                Membres :
+              </Text>
               <VStack w={'100%'}>
-                {
-                  users?.data?.data && users.data.data.map((item: any, index: any) => (
+                {users?.data?.data &&
+                  users.data.data.map((item: any, index: any) => (
                     <VaultUserShare vault={props.vault} user={item} key={index} />
-                  ))
-                }
+                  ))}
               </VStack>
             </VStack>
           </VStack>
-        
         </DrawerBody>
       </DrawerContent>
     </Drawer>
-  )
+  );
 }
 
 export default VaultShare;

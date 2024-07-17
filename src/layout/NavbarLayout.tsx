@@ -7,7 +7,6 @@ interface NavbarLayoutProps {
 }
 
 function NavbarLayout(props: NavbarLayoutProps) {
-  
   return (
     <HStack w={'100vw'} h={'100vh'} alignItems={'start'} spacing={0}>
       <Box h={'100%'}>
@@ -17,7 +16,7 @@ function NavbarLayout(props: NavbarLayoutProps) {
         {props.children}
       </Box>
     </HStack>
-  )
+  );
 }
 
 export default NavbarLayout;
