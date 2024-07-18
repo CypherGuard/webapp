@@ -1,12 +1,12 @@
 interface VaultViewerProps {
-  element: any;
+  id: any;
 }
 
-function Index(props: VaultViewerProps) {
+function VaultViewer(props: VaultViewerProps) {
   
   return (
-    <p>test</p>
+    <p>{props.id}</p>
   )
 }
 
-export default Index;
+export default VaultViewer;

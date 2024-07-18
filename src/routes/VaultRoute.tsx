@@ -5,26 +5,24 @@ import { useParams } from 'react-router-dom';
 import { getAllLoginRequest } from '../api/login/getAllRequest.ts';
 import { Key, useEffect, useState } from 'react';
 import VaultLayout from '../layout/VaultLayout.tsx';
+import VaultElementList from '../components/vault/VaultElementList';
 
 function VaultRoute() {
   let { id } = useParams();
   const logins = useQuery(['vault_list', id], () => getAllLoginRequest(id || ''), {
     enabled: !!id,
+    onSuccess: (data) => {
+      setSelected(data.data[0].id);
+    }
   });
   const [selected, setSelected] = useState<number | undefined>(undefined);
-  
-  useEffect(() => {
-    if(!logins?.data?.data) return;
-    
-    setSelected(logins.data.data[0].id);
-  }, [logins]);
   
   return (
     <NavbarLayout>
       <HeaderLayout>
-        <VaultLayout element={selected}>
+        <VaultLayout id={selected}>
           {
-            logins?.data?.data && logins.data.data.map((item: any, index: Key) => <p key={index}>{item.name}</p>)
+            logins?.data?.data && <VaultElementList onClick={setSelected} element={logins.data.data} />
           }
         </VaultLayout>
       </HeaderLayout>
