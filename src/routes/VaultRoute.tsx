@@ -1,29 +1,22 @@
 import NavbarLayout from '../layout/NavbarLayout.tsx';
 import HeaderLayout from '../layout/HeaderLayout.tsx';
-import { useStore } from '@nanostores/react';
-import { UserPgpKey } from '../stores/userPgpKey.ts';
+import { useQuery } from 'react-query';
+import { useParams } from 'react-router-dom';
+import { getAllLoginRequest } from '../api/login/getAllRequest.ts';
+import { Key } from 'react';
 
 function VaultRoute() {
-  const key = useStore(UserPgpKey);
-
+  let { id } = useParams();
+  const logins = useQuery(['vault_list', id], () => getAllLoginRequest(id || ''), {
+    enabled: !!id,
+  });
+  
   return (
     <NavbarLayout>
       <HeaderLayout>
-        <div>
-          <h1>Vault</h1>
-        </div>
-        {key ? (
-          <div>
-            <h2>Public Key</h2>
-            <p>{key.publicKey}</p>
-            <h2>Private Key</h2>
-            <p>{key.privateKey}</p>
-          </div>
-        ) : (
-          <div>
-            <h2>Loading...</h2>
-          </div>
-        )}
+        {
+          logins?.data?.data && logins.data.data.map((item: any, index: Key) => <p key={index}>{item.name}</p>)
+        }
       </HeaderLayout>
     </NavbarLayout>
   );
