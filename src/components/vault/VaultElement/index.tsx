@@ -11,7 +11,7 @@ interface VaultElementProps {
 function VaultElement (props: VaultElementProps) {
   
   return (
-    <HStack className={'vault_element'} w={'100%'} borderRadius={5} py={2} cursor={'pointer'} onClick={() => props.onClick(props.element.id)}>
+    <HStack className={'vault_element'} w={'100%'} borderRadius={5} py={2} cursor={'pointer'} onClick={() => props.onClick(props.element)}>
       <VStack px={3}>
         <HStack>
           <EmailIcon />

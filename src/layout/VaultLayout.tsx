@@ -4,23 +4,24 @@ import VaultViewer from '../components/vault/VaultViewer';
 
 interface VaultLayoutProps {
   children: ReactNode;
-  id: any | undefined;
+  selectedElement: any | undefined;
 }
 
 function VaultLayout(props: VaultLayoutProps) {
   return (
-    <HStack w={'100%'} h={'100%'} alignItems={'start'} spacing={0}>
-      <Box w={'100%'} h={'100%'} p={4}>
+    <HStack w={'100%'} h={'100%'} alignItems={'start'}>
+      <Box w={'60%'} h={'100%'} p={4}>
         {props.children}
       </Box>
       {
-        props.id &&
-          <>
-            <Divider orientation={'vertical'} />
-            <Box height={'100%'} p={4}>
-              <VaultViewer id={props.id}/>
-            </Box>
-          </>
+        props.selectedElement &&
+          <Divider orientation={'vertical'} />
+      }
+      {
+        props.selectedElement &&
+        <Box w={'40%'} h={'100%'} p={4}>
+          <VaultViewer selectedElement={props.selectedElement} />
+        </Box>
       }
     </HStack>
   );

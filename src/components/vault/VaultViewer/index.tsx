@@ -1,11 +1,20 @@
+import LoginView from './LoginView.tsx';
+import { Box } from '@chakra-ui/react';
+
 interface VaultViewerProps {
-  id: any;
+  selectedElement: any;
 }
 
 function VaultViewer(props: VaultViewerProps) {
   
+  const view = {
+    "login": <LoginView element={props.selectedElement} />,
+  }
+  
   return (
-    <p>{props.id}</p>
+    <Box w={'100%'}>
+      {view[props.selectedElement?.type]}
+    </Box>
   )
 }
 

@@ -12,17 +12,42 @@ function VaultRoute() {
   const logins = useQuery(['vault_list', id], () => getAllLoginRequest(id || ''), {
     enabled: !!id,
     onSuccess: (data) => {
-      setSelected(data.data[0].id);
+      setSelected(data.data.map((login: any) => {
+        return {
+          ...login,
+          type: 'login'
+        }
+      })[0]);
     }
   });
-  const [selected, setSelected] = useState<number | undefined>(undefined);
+  const [allObject , setAllObject] = useState<any[]>([]);
+  
+  useEffect(() => {
+    logins.refetch();
+  }, [id]);
+  
+  useEffect(() => {
+    let temp = []
+    if (logins?.data?.data) {
+      let loginsData = logins.data.data.map((login: any) => {
+        return {
+          ...login,
+          type: 'login'
+        }
+      });
+      temp = [...temp, ...loginsData];
+    }
+    setAllObject(temp);
+  }, [logins]);
+  
+  const [selected, setSelected] = useState<any | undefined>(undefined);
   
   return (
     <NavbarLayout>
       <HeaderLayout>
-        <VaultLayout id={selected}>
+        <VaultLayout selectedElement={selected}>
           {
-            logins?.data?.data && <VaultElementList onClick={setSelected} element={logins.data.data} />
+            logins?.data?.data && <VaultElementList onClick={setSelected} element={allObject} />
           }
         </VaultLayout>
       </HeaderLayout>
