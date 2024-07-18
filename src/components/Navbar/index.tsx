@@ -26,7 +26,7 @@ function Navbar() {
             </Button>
             <VaultList />
           </VStack>
-          <p>est</p>
+          <p></p>
         </VStack>
       </Box>
     </DarkMode>
