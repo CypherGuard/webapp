@@ -1,6 +1,8 @@
 import { HStack, Text, VStack } from '@chakra-ui/react';
 import { EmailIcon } from '@chakra-ui/icons';
 
+import './styles.css'
+
 interface VaultElementProps {
   element: any;
   onClick?: () => void;
@@ -9,10 +11,7 @@ interface VaultElementProps {
 function VaultElement (props: VaultElementProps) {
   
   return (
-    <HStack w={'100%'} borderRadius={5} py={2} cursor={'pointer'} onClick={() => {
-      console.log('clicked');
-      props.onClick(props.element.id);
-    }}>
+    <HStack className={'vault_element'} w={'100%'} borderRadius={5} py={2} cursor={'pointer'} onClick={() => props.onClick(props.element.id)}>
       <VStack px={3}>
         <HStack>
           <EmailIcon />

@@ -1,0 +1,8 @@
+.vault_element {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.vault_element:hover {
+    background-color: rgba(94, 94, 94, 0.05);
+}
