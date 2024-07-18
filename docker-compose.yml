@@ -6,11 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
-      - "443:443"
+      - ${VITE_PORT}:${VITE_PORT}
     expose:
-      - "3000"
-      - "443"
+      - ${VITE_PORT}
     volumes:
       - ./:/webapp
       - ./node_modules
