@@ -10,7 +10,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { AttachmentIcon, EditIcon, HamburgerIcon, LinkIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { TOTP } from 'totp-generator';
 
 interface LoginViewProps {
