@@ -1,9 +1,10 @@
 import { Box, Button, Divider, HStack, VStack } from '@chakra-ui/react';
 import VaultElement from '../VaultElement';
+import { Dispatch } from 'react';
 
 interface VaultElementListProps {
   element: any[];
-  onClick?: () => void;
+  onClick?: Dispatch<any>;
 }
 
 function VaultElementList(props: VaultElementListProps) {
