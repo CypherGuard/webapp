@@ -6,6 +6,13 @@ This is the webapp for CypherGuard, a password manager that uses a combination o
 
 To install the webapp, you need docker and docker-compose installed on your machine. Then, you can run the following command:
 
+### Requirements
+
+- pnpm
+- node
+- docker
+- docker-compose
+
 ```bash
 pnpm install
 docker-compose up -d
