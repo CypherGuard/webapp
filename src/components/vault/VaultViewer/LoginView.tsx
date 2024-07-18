@@ -5,13 +5,13 @@ import {
   IconButton,
   Input,
   InputGroup, InputLeftElement,
-  InputRightAddon,
   InputRightElement,
   Text, Textarea,
   VStack,
 } from '@chakra-ui/react';
 import { AttachmentIcon, EditIcon, HamburgerIcon, LinkIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { TOTP } from 'totp-generator';
 
 interface LoginViewProps {
   element: {
@@ -32,6 +32,10 @@ interface LoginViewProps {
 function LoginView (props: LoginViewProps) {
   const [hide, setHide] = useState<boolean>(true);
   const [totpHide, setTotpHide] = useState<boolean>(true);
+  
+  const { otp, expires } =TOTP.generate(props.element.totp);
+  const expireTIme = Math.abs(Date.now() - (new Date(expires) as unknown as number));
+  const expirePercent = ((expireTIme / 10) / 30) + '%' ;
   
   return (
     <VStack justifyContent={'space-between'} w={'100%'} spacing={5}>
@@ -104,6 +108,20 @@ function LoginView (props: LoginViewProps) {
       </VStack>
       
       <VStack w={'100%'}>
+        <FormControl>
+          <InputGroup>
+            <Input value={otp} isReadOnly variant={'filled'} />
+            <InputRightElement>
+              <IconButton aria-label={'copy'} icon={<AttachmentIcon />} />
+            </InputRightElement>
+          </InputGroup>
+        </FormControl>
+        <Box bgColor={'gray.700'} h={1} w={'100%'}>
+          <Box bgColor={'green.400'} h={1} w={expirePercent} />
+        </Box>
+      </VStack>
+      
+      <VStack w={'100%'} alignItems={'start'} border={'1px solid'} borderColor={'gray.700'} borderRadius={4} p={4}>
         <Text fontSize={'sm'}>Created at: {props.element.created_at}</Text>
         <Text fontSize={'sm'}>Updated at: {props.element.updated_at}</Text>
       </VStack>
