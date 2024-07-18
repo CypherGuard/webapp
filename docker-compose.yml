@@ -7,8 +7,11 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
+      - "443:443"
     expose:
       - "3000"
+      - "443"
     volumes:
       - ./:/webapp
-      - /node_modules
+      - ./node_modules
+
